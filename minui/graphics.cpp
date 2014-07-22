@@ -381,6 +381,12 @@ int gr_init() {
     printf("gr_init: Only 4-byte pixel formats supported\n");
   }
 
+#ifdef TARGET_SCREEN_BLANK_ON_BOOT
+    printf("TARGET_SCREEN_BLANK_ON_BOOT := true\n");
+    gr_fb_blank(true);
+    gr_fb_blank(false);
+#endif
+
   return 0;
 }
 
@@ -400,6 +406,7 @@ int gr_fb_height() {
 
 void gr_fb_blank(bool blank) {
   gr_backend->Blank(blank);
+  gr_backend->Blank(gr_backend);
 }
 
 void gr_rotate(GRRotation rot) {
